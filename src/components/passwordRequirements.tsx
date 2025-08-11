@@ -1,12 +1,11 @@
 import React from 'react';
 import '../App.css';
 import {isValid} from '../utils/passwordUtils'
+import {requirements} from '../data/data'
 type Props = {
   password: string;
 };
 export function PasswordRequirements({ password }: Props){
-    
-    
   return (
     
     <div className='password-requirements'>
@@ -22,12 +21,4 @@ export function PasswordRequirements({ password }: Props){
       </ul>
     </div>
   );
-}
-const requirements = {
-  eightChars : "At least 8 characters long",
-  oneUpper : "one uppercase letter",
-  oneLower : "one lowercase letter",
-  oneNumber : "one number",
-  oneSpecial : "one special character(eg. !@#$%^&*)",
-
 }

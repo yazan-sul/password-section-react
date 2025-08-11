@@ -1,3 +1,5 @@
+import {requirements} from '../data/data'
+
 function includesNumber(str: string): boolean {
     return /\d/.test(str);
 }
@@ -10,6 +12,7 @@ function includesLowercase(str: string): boolean {
 function includesSpecialChar(str: string): boolean {
     return /[!@#$%^&*(),.?":{}|<>]/.test(str);
 }
+
 export function isPasswordValid(password: string): boolean {
   return Object.values(requirements).every((req) => isValid(req, password));
 }
@@ -38,16 +41,4 @@ export function isValid(requirement: string, password: string): boolean {
             return false;
         }
     }
-}
-
-
-
-
-const requirements = {
-  eightChars : "At least 8 characters long",
-  oneUpper : "one uppercase letter",
-  oneLower : "one lowercase letter",
-  oneNumber : "one number",
-  oneSpecial : "one special character(eg. !@#$%^&*)",
-
 }

@@ -14,10 +14,10 @@ function App() {
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [valid, setIsVaild] = useState(false);
-  
+    // const debouncedCheck = debounce(handleRequest, 3000); 
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("is vaild ? "+valid)
     try {
       if (!valid) {
         return;
@@ -96,6 +96,7 @@ function App() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      <ConfirmPassword value={password} newPassword={password}/>
       <PasswordField
         label="New Password"
         value={newPassword}
