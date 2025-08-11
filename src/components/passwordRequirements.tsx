@@ -19,17 +19,17 @@ export function PasswordRequirements({ password }: Props){
         return /[!@#$%^&*(),.?":{}|<>]/.test(str);
     }
     function isValid(requirement: string): boolean {
-
+        
         switch (requirement) {
-            case "At least 8 characters long":
+            case requirements.eightChars:
                 return password.length >= 8;
-            case "one uppercase letter":
+            case requirements.oneUpper:
                 return includesUppercase(password);
-            case "one lowercase letter":
+            case requirements.oneLower:
                 return includesLowercase(password);
-            case "one number":
+            case requirements.oneNumber:
                 return includesNumber(password  );
-            case "one special character(eg. !@#$%^&*)":
+            case requirements.oneSpecial:
                 return includesSpecialChar(password );
             default:
                 return false;
@@ -40,7 +40,7 @@ export function PasswordRequirements({ password }: Props){
     
     <div className='password-requirements'>
        <ul>
-        {requirements.map((req, index) => (
+        {Object.values(requirements).map((req, index) => (
           <li
             key={index}
             className={`requirement-item ${isValid(req) ? 'valid' : 'invalid'}`}
@@ -54,10 +54,11 @@ export function PasswordRequirements({ password }: Props){
 }
 
 
-const requirements = [
-  "At least 8 characters long",
-  "one uppercase letter",
-  "one lowercase letter",
-  "one number",
-  "one special character(eg. !@#$%^&*)",
-]
+const requirements = {
+  eightChars : "At least 8 characters long",
+  oneUpper : "one lowercase letter",
+  oneLower : "one uppercase letter",
+  oneNumber : "one number",
+  oneSpecial : "one special character(eg. !@#$%^&*)",
+
+}
