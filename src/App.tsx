@@ -93,12 +93,14 @@ function App() {
       </header>
       <PasswordField
         label="Password"
+        id="1"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <ConfirmPassword value={password} newPassword={password}/>
       <PasswordField
         label="New Password"
+        id="2"
         value={newPassword}
         onChange={handleNewPasswrodChange}
       />
@@ -106,6 +108,7 @@ function App() {
 
       <PasswordField
         label="Repeat Password"
+        id="3"
         value={repeatPassword}
         onChange={handleRepeatedPasswordChange}
       />

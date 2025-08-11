@@ -3,11 +3,12 @@ import "../App.css";
 
 type Props = {
   label: string;
+  id:string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function PasswordField({ label, value, onChange }: Props) {
+export function PasswordField({ label, id, value, onChange }: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -16,9 +17,9 @@ export function PasswordField({ label, value, onChange }: Props) {
 
   return (
     <div className="password-field">
-      <label htmlFor="passwordInput">{label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
-        id="passwordInput"
+        id={id}
         type={showPassword ? "text" : "password"}
         placeholder={`Enter your ${label}`}
         value={value}
