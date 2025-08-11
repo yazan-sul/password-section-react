@@ -3,6 +3,7 @@ import { PasswordField } from "./components/passwordField";
 import { PasswordRequirements } from "./components/passwordRequirements";
 import { ConfirmPassword } from "./components/confirmPassword";
 import {isPasswordValid} from './utils/passwordUtils'
+import {changePasswordApi} from './api'
 import "./App.css";
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
       setSubmitStatus(null);
 
       const res = await fetch(
-        "https://www.greatfrontend.com/api/projects/challenges/auth/change-password",
+          changePasswordApi(),
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -39,7 +40,7 @@ function App() {
             new_password: newPassword,
           }),
         }
-      );
+      );  
       setIsSubmitting(false);
       const data = await res.json();
       if (res.ok && data.user) {
