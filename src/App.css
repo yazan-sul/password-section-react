@@ -128,3 +128,9 @@ input[type='password']:hover {
     column-gap: 16px;
   }
 }
+.validPass{
+  color: green;
+}
+.inValidPass{
+  color: red;
+}

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { PasswordField } from "./components/passwordField";
 import { PasswordRequirements } from "./components/passwordRequirements";
 import { ConfirmPassword } from "./components/confirmPassword";
-
+import {isPasswordValid} from './utils/passwordUtils'
 import "./App.css";
 
 function App() {
@@ -12,22 +12,22 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [valid, setIsVaild] = useState(false);
+  
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-   
-     if (newPassword !== repeatPassword) {
-      setError("New password and repeat password do not match");
-      return;
-    }
-   
-    setError(null);
+    console.log("is vaild ? "+valid)
+    try {
+      if (!valid) {
+        return;
+      }
+      setError(null);
 
-    if(isSubmitting) return; 
-    setIsSubmitting(true);
-    setSubmitStatus(null);
- 
-     try {
+      if (isSubmitting) return;
+      if(error !== null) return;
+      setIsSubmitting(true);
+      setSubmitStatus(null);
+
       const res = await fetch(
         "https://www.greatfrontend.com/api/projects/challenges/auth/change-password",
         {
@@ -46,7 +46,7 @@ function App() {
         setSubmitStatus("Password changed successfully!");
         setPassword("");
         setNewPassword("");
-        setRepeatPassword("");      
+        setRepeatPassword("");
       } else {
         setError(data.error || "Password change failed");
       }
@@ -54,7 +54,36 @@ function App() {
       setError("Failed to change password");
     }
   }
+  const handleRepeatedPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
+    setRepeatPassword(value);
+    if (!value || !newPassword) {
+      setError("Password fields can't be empty");
+    } else if (!handleMatch(value, newPassword)) {
+      setError("New password and repeat password do not match");
+    } else {
+      setError(null);
+    }
+  };
+  const handleNewPasswrodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setNewPassword(value);
 
+    setIsVaild(isPasswordValid(value));
+    if (!value || !repeatPassword) {
+      setError("Password fields can't be empty");
+    } else if (!handleMatch(value, repeatPassword)) {
+      setError("New password and repeat password do not match");
+    } else {
+      setError(null);
+    }
+  };
+  function handleMatch(value1: string, value2: string): boolean {
+    return value1 === value2;
+  }
+  
   return (
     <form className="App" onSubmit={handleSubmit}>
       <header>
@@ -69,31 +98,31 @@ function App() {
       <PasswordField
         label="New Password"
         value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
+        onChange={handleNewPasswrodChange}
       />
       <PasswordRequirements password={newPassword} />
 
       <PasswordField
         label="Repeat Password"
         value={repeatPassword}
-        onChange={(e) => setRepeatPassword(e.target.value)}
+        onChange={handleRepeatedPasswordChange}
       />
       {!submitStatus && !error && (
         <>
           {repeatPassword && newPassword === repeatPassword && (
-            <p style={{ color: "green" }}>Passwords do match</p>
+            <p className="validPass">Passwords do match</p>
           )}
           {repeatPassword && newPassword !== repeatPassword && newPassword && (
-            <p style={{ color: "red" }}>Passwords do not match</p>
+            <p className="inValidPass">Passwords do not match</p>
           )}
         </>
       )}
 
       {submitStatus && (
-        <p style={{ color: "green", marginTop: "1rem" }}>{submitStatus}</p>
+        <p className="validPass">{submitStatus}</p>
       )}
 
-      {error && <p style={{ color: "red", marginTop: "1rem" }}>{error}</p>}
+      {error && <p className="inValidPass">{error}</p>}
 
       <button className="button" type="submit">
         Save changes

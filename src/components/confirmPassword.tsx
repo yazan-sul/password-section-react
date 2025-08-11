@@ -68,9 +68,9 @@ if (!newPassword.trim()) {
   return (
     <div className="password-field">
       {isValid ? (
-        <h3 style={{ color: "green" }}>Correct password</h3>
+        <h3 className="validPass">Correct password</h3>
       ) : (
-        <h3 style={{ color: "red" }}>Password not found on system</h3>
+        <h3 className="inValidPass">Password not found on system</h3>
       )}
     </div>
   );
