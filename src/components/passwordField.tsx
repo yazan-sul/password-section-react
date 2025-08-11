@@ -16,8 +16,9 @@ export function PasswordField({ label, value, onChange }: Props) {
 
   return (
     <div className="password-field">
-      <label>{label}</label>
+      <label htmlFor="passwordInput">{label}</label>
       <input
+        id="passwordInput"
         type={showPassword ? "text" : "password"}
         placeholder={`Enter your ${label}`}
         value={value}
