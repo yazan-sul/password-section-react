@@ -27,6 +27,7 @@ export function PasswordField({ label, id, value, onChange }: Props) {
       />
       <button type="button" id="password-toggle" className={`${showPassword ? "hide" : "show"}`} onClick={togglePasswordVisibility}>
         👁️
+        {/*  */}
       </button>
     </div>
   );
